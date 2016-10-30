@@ -1,0 +1,28 @@
+{
+  "name": "node-reddit",
+  "version": "0.0.0",
+  "description": "Simple Reddit Clone",
+  "main": "server.js",
+  "author": "Rzvn",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "body-parser": "^1.4.3",
+    "express": "^4.13.4",
+    "method-override": "^2.1.3",
+    "morgan": "^1.1.1",
+    "orm" : "^2.1.15",
+    "pg" : "^6.1.0",
+    "lodash" : "^4.16.3",
+    "objection" : "^0.5.5",
+    "cookie-parser": "^1.4.3",
+    "express-session": "^1.14.1",
+    "bcryptjs": "^2.3.0",
+    "connect-redis": "^3.1.0",
+    "angular-markdown-editor": "^1.0.9",
+    "font-awesome": "^4.7.0"
+  }
+}

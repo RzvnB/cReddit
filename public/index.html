@@ -1,0 +1,369 @@
+<!doctype html>
+
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Node/Angular Reddit Clone</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/bootstrap-markdown.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/github.min.css">
+	<link rel="stylesheet" href="css/angular-markdown-editor.css">
+	<link href='https://fonts.googleapis.com/css?family=Archivo+Narrow' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/ngDialog.min.css" type='text/css'>
+	<link rel="stylesheet" href="css/ngDialog-theme-default.min.css" type='text/css'>
+	<link rel="stylesheet" href="css/ngDialog-theme-default.min.css" type='text/css'>
+
+	<style>
+		html { overflow-y: scroll; }
+		#articles-list { margin-bottom: 30px; }
+		body { background: #e4e7ec; }
+		.navbar {
+			border: 0;
+			box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2); }
+		.navbar-default {
+  			color: #fff;
+  			background: #fff; }
+		.navbar-nav { width: 100%;
+					  text-align: center; }
+		.navbar-nav li { float: none;
+						 display: inline-block; }
+
+		.navbar .nav > .active > a,
+		.navbar .nav > .active > a:hover,
+		.navbar .nav > .active > a:focus {
+		  color: #333;
+		  text-decoration: none;
+		  background-color: #ffe939;
+		  font-weight: bolder;
+
+		}
+
+
+		#rightsided2 > a:hover {
+		  color: #333;
+		  text-decoration: none;
+		  background-color: #ffe939;
+		  font-weight: bolder;
+		}
+
+		#rightsided3 > a:hover {
+		  color: #333;
+		  text-decoration: none;
+		  background-color: #ffe939;
+		  font-weight: bolder;
+		}
+
+		.shadow-and-border {
+			border-color: #cfd9D7;
+			border-radius: 2px;
+			box-shadow: 0 1px 5px rgba(0, 0, 0, .2);
+		}
+		#page-name {
+			font-family: 'Archivo Narrow', sans-serif;
+			font-size: x-large;
+		 	color: #ffe939;
+		 	background-color: #333;
+		 	text-decoration: none;
+		}
+		.panel-title > a:hover {
+			text-decoration: none;
+			font-weight: bold;
+		}
+		.panel-title > a:focus {
+			text-decoration: none;
+			/*font-weight: bold;*/
+		}
+		#submit-btn:hover {
+			background-color: #66ff66;
+		}
+
+		.btn > a {
+			color: #333;
+		}
+		.btn > a:hover,a:focus {
+			text-decoration: none;
+		}
+
+		.btn-info {
+			border-color: #ffe939;
+			background: #ffe939;
+			background-color: #ffe939;
+		}
+
+		.btn-info:hover, .btn-info:focus, .btn-info.focus,
+	    .btn-info:active, .btn-info.active, .btn-info:visited,
+	    .btn-info:active:hover, .btn-info.active:hover {
+			font-weight: bold;
+			border-color: #edd834;
+			background: #edd834;
+			background-color: #edd834;
+		}
+
+		.btn-warning {
+			border-color: #ffe939;
+			background: #ffe939;
+			background-color: #ffe939;
+		}
+
+		.btn-warning:hover, .btn-warning:focus, .btn-warning.focus,
+	    .btn-warning:active, .btn-warning.active, .btn-warning:visited,
+	    .btn-warning:active:hover, .btn-warning.active:hover {
+			font-weight: bold;
+			border-color: #edd834;
+			background: #edd834;
+			background-color: #edd834;
+		}
+
+		.btn-default:hover, .btn-default:focus, .btn-default.focus,
+	    .btn-default:active, .btn-default.active, .btn-default:visited,
+	    .btn-default:active:hover, .btn-default.active:hover {
+			font-weight: bold;
+		}
+
+
+
+		#rightsided1 > a:hover {
+		  color: #333;
+		  text-decoration: none;
+		  background-color: #ffe939;
+		  font-weight: bolder;
+		}
+
+		.ngdialog.ngdialog-theme-default.custom-width-900 .ngdialog-content {
+		    width: 1200px;
+		}
+
+		.ngdialog.ngdialog-theme-default.custom-width-900s .ngdialog-content {
+		    width: 900px;
+		}
+
+		.glyphicon {
+			font-size: 20px;
+			pointer-events: all;
+
+		}
+
+		#votes {
+			font-size: 20px;
+		}
+
+		.up{
+		  color: green;
+		}
+
+		.down{
+		  color:red;
+		}
+
+	</style>
+
+
+</head>
+
+	<body ng-controller="MainController as tc">
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container-fluid">
+		        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		        	<ul class="nav navbar-nav">
+		        		<a class="navbar-brand" id="page-name" href="" ng-click="data.setTab(1);data.page='hot'">cReddit</a></li>
+				        <li ng-class="{active:data.isSet(1)}"><a href="" ng-click="data.setTab(1);data.page='hot'">Hot</a></li>
+				        <li ng-class="{active:data.isSet(2)}"><a href="" ng-click="data.setTab(2);data.page='new'">New</a></li>
+				        <!-- <li ng-class="{active:tc.isSet(3)}"><a href="" ng-click="tc.setTab(3);page='top'">Top</a></li> -->
+				        <li ng-class="{active:data.isSet(4)}"><a href="" ng-if="isAuthenticated" ng-click="data.setTab(4);data.page='submit'" >Submit</a></li>
+				        <li class="pull-right" id="rightsided3" ng-click="clickToOpenRegister()" ng-if="!isAuthenticated"><a href="">Register</a></li>
+				        <li class="pull-right" id="rightsided1" ng-click="clickToOpenLogin()" ng-if="!isAuthenticated" ><a href="">Login</a></li>
+				        <li class="pull-right" id="rightsided2" ng-click="logoutUser()" ng-if="isAuthenticated" ><a href="">Logout</a></li>
+			        </ul>
+		        </div>
+	        </div>
+        </div>
+        <!-- <div>hello</div> -->
+        <div class="container">
+        	<div ng-switch on="data.page">
+        		<div ng-switch-default>
+        			<div class="container" ng-repeat="article in articles">
+					    <div class="panel-group">
+						  <div class="panel panel-default shadow-and-border">
+						    <div class="panel-heading">
+        	<!-- <button class="btn btn-default pull-left">New</button> -->
+        						<div ng-if="isAuthenticated">
+    							<span class="glyphicon glyphicon-chevron-up pull-right" ng-click="changeVote(vote, 'up', article.article_id, $index)" ng-class="{true:'up', false:''}[votes[article.article_id]=='up']"></span>
+        						<span class="pull-right" id="votes"> {{ article.votes }} </span>
+        						<span class="glyphicon glyphicon-chevron-down pull-right" ng-click="changeVote(vote, 'down', article.article_id, $index)" ng-class="{true:'down', false:''}[votes[article.article_id]=='down']"></span>
+        						</div>
+						    	<h4 class="panel-title">
+						      		<a data-toggle="collapse" ng-href="#{{$index}}"> {{ article.title }} </a>
+						    	</h4>
+						    </div>
+						    <div ng-attr-id="{{$index}}" class="panel-collapse collapse">
+						    	<div class="panel-body outline" marked="article.text" style="padding: 20px"></div>
+						    	<div class="panel-footer">
+						    		<!-- <button type="button" class="btn btn-danger pull-right" ng-click="deleteArticle(article.article_id)">Remove</button> -->
+						    		<button class="btn btn-info" ng-click="handleLink(article.link)"><a>External Link</a></button>
+						    		<button class="btn btn-warning" ng-click="clickToOpenComments(article.article_id)"><a>Comments</a></button>
+						    		<!-- <button class="btn btn-warning" ng-click="openImage()"><a>Image</a></button> -->
+						    		<button class="btn btn-default pull-right" ng-click="clickToOpenEdit(article)" ng-if="checkOP(article.username)"><a>Edit</a></button>
+						    		<div class="clearfix"></div>
+						    	</div>
+						    </div>
+						  </div>
+						</div>
+					 </div>
+    			</div>
+    			<div ng-switch-when="new">
+        			<h1>NEW</h1>
+    			</div>
+    			<!-- <div ng-switch-when="top">
+        			<h1>TOP</h1>
+    			</div> -->
+    			<div ng-switch-when="submit">
+        			<div class="text-center" id="article-form">
+						<form role="form">
+						  	<div class="form-group">
+						    	<label for="title">Title:</label>
+						    	<input type="text" class="form-control input-lg shadow-and-border" id="title" ng-model="formData.title" required>
+						  	</div>
+						  	<div class="form-group">
+						    	<label for="link">Link:</label>
+						    	<input type="url" class="form-control input-lg shadow-and-border" id="link" ng-model="formData.link" required>
+						  	</div>
+						  	<div class="form-group">
+								<label for="Content">Content:</label>
+								<textarea markdown-editor="{addExtraButtons: true, resize: 'vertical'}" rows="10" ng-model="formData.text"></textarea>
+								<div marked="formData.text" class="outline" style="padding: 20px">
+								</div>
+								<!-- <textarea style="resize:none" class="form-control input-lg shadow-and-border" rows="7" id="content" ng-model="formData.text" required></textarea> -->
+							</div>
+						  	<button type="submit" class="btn btn-default" id="submit-btn" ng-click="createArticle()">Submit</button>
+						</form>
+					</div>
+    			</div>
+        	</div>
+        </div>
+
+        <script type="text/ng-template" id="loginForm">
+        <h2 style="text-align: center;">Login</h2>
+        <form role="form">
+		  	<div class="form-group">
+		    	<label for="username">Username</label>
+		    	<input type="text" class="form-control input-lg shadow-and-border" ng-model="loginData.username" required>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="password">Password</label>
+		    	<input type="password" class="form-control input-lg shadow-and-border" ng-model="loginData.password" required>
+		  	</div>
+		</form>
+        <div class="ngdialog-buttons">
+            <button type="submit" class="ngdialog-button ngdialog-button-primary" ng-click="loginUser(); closeThisDialog()">Confirm</button>
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+        </div>
+	    </script>
+
+	    <script type="text/ng-template" id="registerForm">
+	    <h2 style="text-align: center;">Register</h2>
+        <form role="form">
+		  	<div class="form-group">
+		    	<label for="username">Username</label>
+		    	<input type="text" class="form-control input-lg shadow-and-border" ng-model="registerData.username" required>
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="password">Password</label>
+		    	<input type="password" class="form-control input-lg shadow-and-border" ng-model="registerData.password" required>
+		  	</div>
+		</form>
+        <div class="ngdialog-buttons">
+            <button type="submit" class="ngdialog-button ngdialog-button-primary" ng-click="registerUser(); closeThisDialog()">Confirm</button>
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+        </div>
+	    </script>
+
+
+	    <script type="text/ng-template" id="editForm">
+	    <div class="text-center" id="article-form">
+						<form role="form">
+						  	<div class="form-group">
+						    	<label for="title">Title:</label>
+						    	<input type="text" class="form-control input-lg shadow-and-border" id="title" ng-model="data.edit_article.title" required>
+						  	</div>
+						  	<div class="form-group">
+						    	<label for="link">Link:</label>
+						    	<input type="url" class="form-control input-lg shadow-and-border" id="link" ng-model="data.edit_article.link" required>
+						  	</div>
+						  	<div class="form-group">
+								<label for="Content">Content:</label>
+								<textarea markdown-editor="{addExtraButtons: true, resize: 'vertical'}" style="resize:none" class="form-control input-lg shadow-and-border" rows="7" id="content" ng-model="data.edit_article.text" required></textarea>
+							</div>
+							<div class="ngdialog-buttons">
+					            <button type="submit" class="ngdialog-button ngdialog-button-primary" ng-click="updateArticle(); closeThisDialog()">Save</button>
+					            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+					        </div>
+						</form>
+					</div>
+	    </script>
+
+
+	    <script type="text/ng-template" id="imageModal">
+	    <div id="img-container">
+	    	<img ng-src="{{image}}" style="max-width: 100%;height: auto;">
+    	</div>
+	    </script>
+
+	    <script type="text/ng-template" id="commentForm">
+	    	<div class="form-group" ng-if="isAuthenticated">
+								<label for="Content">Comment:</label>
+								<textarea markdown-editor="{addExtraButtons: true, resize: 'vertical'}" style="resize:none" class="form-control input-lg shadow-and-border" rows="6" id="content" ng-model="commentData.content" required></textarea>
+								<br>
+								<button type="submit" class="btn btn-default" id="submit-btn" ng-click="createComment()">Submit</button>
+			</div>
+
+			<div ng-repeat="comment in comments">
+			    <div class="panel panel-default">
+					<div class="panel-body outline" marked="comment.content" >
+				  	</div>
+				  	<div class="panel-footer"><i>@{{ comment.username }}</i></div>
+			  	</div>
+	  	</div>
+			  	<!-- <div class="panel-body">
+				    Panel content
+			  	</div>
+			  	<div class="panel-footer"><i>Panel footer</i></div>
+			  	<div class="panel-body">
+				     Panel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel content
+			  	</div>
+			  	<div class="panel-footer"><i>Panel footer</i></div>
+			  	<div class="panel-body">
+				    Panel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel contentPanel content
+			  	</div>
+			  	<div class="panel-footer"><i>Panel footer</i></div>
+			</div> -->
+		</script>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-messages.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.min.js"></script>
+	<script src="js/angular-sanitize.min.js"></script>
+	<script src="js/marked.js"></script>
+	<script type="text/javascript" src="js/angular-marked.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-markdown.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+	<script type="text/javascript" src="js/angular-highlightjs.js"></script>
+	<script type="text/javascript" src="js/angular-markdown-editor.js"></script>
+	<script src="js/ngDialog.min.js"></script>
+  <script src="js/controllers/main.js"></script>
+  <script src="js/services/articles.js"></script>
+  <script src="js/services/users.js"></script>
+  <script src="js/core.js"></script>
+
+
+
+    </body>
+    </html>
+
